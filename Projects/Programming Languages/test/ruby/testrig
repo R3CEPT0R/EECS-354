@@ -1,0 +1,24 @@
+#!/usr/bin/ruby
+require 'Answer'
+
+@tests = [
+                "0|0x00000000|0x00000000",
+                #"2343749132|0x8BB2C60C|0x0CC6B28B"
+		"1171874566|0x45D96306|0x0663D945"
+         ]
+
+@wrongs = [
+                 "1|0x00000001|0x00000001",
+                 "10|0x0000000A|0xA0000000"
+          ]
+
+def test(var, correct)
+    if (verify(var) == correct)
+        puts "correct"
+    else
+        puts "no"
+    end
+end
+
+@tests.map { |var| test(var, true) }
+@wrongs.map { |var| test(var, false) }

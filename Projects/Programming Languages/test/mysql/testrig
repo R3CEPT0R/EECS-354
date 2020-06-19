@@ -1,0 +1,47 @@
+#!/bin/bash
+
+CMD="mysql -u prog --skip-column-names -f test"
+
+A1="pk	int(11) name	varchar(20) password	char(32) "
+A2="Foo	*87151771178AE37AFFF2EA68112ADCF Bar	*87151771178AE37AFFF2EA68112ADCF "
+A3="user_pk	int(11) fav_color	varchar(20) "
+A4="1	Foo	*13488180CAC0FAD93622133AD6DBF52 2	Bar	*87151771178AE37AFFF2EA68112ADCF 1	Purple	 2	White	 "
+A5="1	Foo	*13488180CAC0FAD93622133AD6DBF52 2	Bar	*87151771178AE37AFFF2EA68112ADCF 1	Purple	 2	White	 pk	test	 name	test	 password	test	 user_pk	test_color	 fav_color	test_color	 "
+
+echo "drop table if exists test,test_color;" | $CMD
+
+$CMD < 1.sql
+res=`echo "show columns from test;" | $CMD | cut -f1,2 | tr '\n' ' '`
+if [ "$res" == "$A1" ]; then
+	echo correct
+else echo no
+fi
+
+$CMD < 2.sql
+res=`echo "select name,password from test;" | $CMD | tr '\n' ' '`
+if [ "$res" == "$A2" ]; then
+	echo correct
+else echo no
+fi
+
+$CMD < 3.sql
+res=`echo "show columns from test_color;" | $CMD | cut -f1,2 | tr '\n' ' '`
+if [ "$res" == "$A3" ]; then
+	echo correct
+else echo no
+fi
+
+$CMD < 4.sql
+res=`echo "select * from test union select *,'' from test_color;" | $CMD | tr '\n' ' '`
+if [ "$res" == "$A4" ]; then
+	echo correct
+else echo no
+fi
+
+res=`$CMD < 5.sql | tr '\n' ' '`
+if [ "$res" == "$A5" ]; then
+	echo correct
+else echo no
+fi
+
+echo "drop table if exists test,test_color;" | $CMD

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cp ../../shell/1.sh ./
+cp ../../shell/2.sh ./
+cp ../../shell/3.sh ./
+cp ../../shell/4.sh ./
+cp ../../shell/5.sh ./
+cp ../../shell/6.sh ./
+cp ../../shell/7.sh ./
+cp ../../shell/8.sh ./

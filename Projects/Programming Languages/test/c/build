@@ -1,0 +1,4 @@
+#!/bin/bash
+
+test -f ../../c/answer.h && ln -fs ../../c/answer.h ./ && \
+make
