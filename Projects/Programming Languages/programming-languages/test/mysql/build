@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cp ../../mysql/1.sql ./
+cp ../../mysql/2.sql ./
+cp ../../mysql/3.sql ./
+cp ../../mysql/4.sql ./
+cp ../../mysql/5.sql ./

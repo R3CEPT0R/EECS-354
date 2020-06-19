@@ -1,0 +1,68 @@
+#!/bin/bash
+
+A1="total 0"
+A2="file3.csv file5.csv file7.csv file9.csv file10.sh file1.txt file2.txt file4.txt file6.txt file8.txt "
+A3="This is file 1."
+A4="file10.sh file2.txt file3.csv file4.txt file5.csv file6.txt file7.csv file8.txt file9.csv foobar.txt "
+A5="test/file3.csv test/file5.csv test/file7.csv test/file9.csv "
+A6="ls: cannot access test/file8.txt: No such file or directory"
+A7="-r-xr--r--"
+A8="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+
+rm -rf ./test/ >/dev/null 2>&1
+
+bash ./1.sh >/dev/null
+res=`ls -l ./test/ 2>&1 | tr -d '\n'`
+if [ "$res" == "$A1" ]; then
+	echo correct
+else echo no
+fi
+
+bash ./2.sh >/dev/null
+res=`ls -X ./test/ | tr '\n' ' '`
+if [ "$res" == "$A2" ]; then
+	echo correct
+else echo no
+fi
+
+bash ./3.sh >/dev/null
+res=`cat ./test/file1.txt | tr -d '\n'`
+if [ "$res" == "$A3" ]; then
+	echo correct
+else echo no
+fi
+
+bash ./4.sh >/dev/null
+res=`ls ./test/ | tr '\n' ' '`
+if [ "$res" == "$A4" ]; then
+	echo correct
+else echo no
+fi
+
+res=`cat ./5.sh | bash | sed 's/\.\///' | tr '\n' ' '`
+if [ "$res" == "$A5" ]; then
+	echo correct
+else echo no
+fi
+
+bash ./6.sh >/dev/null
+res=`ls test/file8.txt 2>&1 | tr -d '\n'`
+if [ "$res" == "$A6" ]; then
+	echo correct
+else echo no
+fi
+
+bash ./7.sh >/dev/null
+res=`ls -l test/file10.sh | cut -b 1-10`
+if [ "$res" == "$A7" ]; then
+	echo correct
+else echo no
+fi
+
+res=`cat ./8.sh | bash | tr -d '\n'`
+if [ "$res" == "$A8" ]; then
+	echo correct
+else echo no
+fi
+
+rm -rf ./test/ >/dev/null 2>&1
